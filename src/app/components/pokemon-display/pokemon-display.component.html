@@ -13,10 +13,10 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">{{ pokemon.name | titlecase}}</h5>
+              <h5 class="card-title">#{{ pokemon.id }} {{ pokemon.name | titlecase}}</h5>
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
                 content. This content is a little bit longer.</p>
-              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@
       this.value <= 3 ? 3 : this.value; this.value = this.value >= 30 ? 30 : this.value">
     </div>
     <div class="col-auto">
-      <label for="range" class="form-label">Range</label>
+      <label for="range" class="form-label">Starting #</label>
       <ng-select formControlName="range" [items]="rangeNumber" class="form-control" [clearable]="false" id="range"></ng-select>
     </div>
   </form>

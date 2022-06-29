@@ -36,16 +36,16 @@ export class PokemonDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchPokemonList(this.limit, this.offset);
-    this.rangeNumber = this.rangeFromNumber(1, this.maxPokemon, this.limit);
     this.over = new Array(this.limit);
     this.over.fill(false);
+    this.rangeNumber = this.rangeFromNumber(1, this.maxPokemon, this.limit);
     this.formSubscription = this.form.valueChanges
       .pipe(delay(1000))
       .subscribe((res) => {
         this.limit = res.quantity;
         this.offset = res.range - 1;
-        this.fetchPokemonList(this.limit, this.offset);
         this.rangeNumber = this.rangeFromNumber(1, this.maxPokemon, this.limit);
+        this.fetchPokemonList(this.limit, this.offset);
       });
   }
 
@@ -69,16 +69,16 @@ export class PokemonDisplayComponent implements OnInit {
     this.offset + this.limit === this.maxPokemon
       ? (this.offset = 0)
       : (this.offset += this.limit);
-    this.fetchPokemonList(this.limit, this.offset);
-    this.form.patchValue({ range: this.offset + 1 });
+      this.form.patchValue({ range: this.offset + 1 });
+    // this.fetchPokemonList(this.limit, this.offset);
   }
 
   onBackClick() {
     this.offset - this.limit < 0
       ? (this.offset = this.maxPokemon - this.limit)
       : (this.offset -= this.limit);
-    this.fetchPokemonList(this.limit, this.offset);
     this.form.patchValue({ range: this.offset + 1 });
+    // this.fetchPokemonList(this.limit, this.offset);
   }
   rangeFromNumber(from: number, to: number, step: number): number[] {
     return [...Array(Math.floor((to - from) / step) + 1)].map(
