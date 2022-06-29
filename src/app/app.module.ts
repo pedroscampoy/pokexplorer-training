@@ -8,6 +8,8 @@ import { PokemonDisplayComponent } from './components/pokemon-display/pokemon-di
 import { PokemonSearchComponent } from './components/pokemon-search/pokemon-search.component';
 import { PokemonFilterComponent } from './components/pokemon-filter/pokemon-filter.component';
 import { HomeComponent } from './components/home/home.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,10 @@ import { HomeComponent } from './components/home/home.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgSelectModule,
+    ReactiveFormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,8 +10,8 @@ export class PokemonService {
 
   constructor(private http: HttpClient) { }
 
-  getPokemons(limit: number = 150) {
-    let params = new HttpParams().set('limit', limit).set('offset', 0);
+  getPokemons(limit: number = 20, offset: number = 0) {
+    let params = new HttpParams().set('limit', limit).set('offset', offset);
 
     return this.http.get(this.pokeapiUrl + 'pokemon',
      {params,
@@ -23,6 +23,5 @@ export class PokemonService {
 
     return this.http.get(url,
      {responseType: 'json'})
-     //.pipe(map((res: any) => res.results))
   }
 }

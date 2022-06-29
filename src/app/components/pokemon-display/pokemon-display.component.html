@@ -1,1 +1,41 @@
-<!-- <h2 *ngFor="let pokemon of pokemonList$ | async">{{ pokemon.url }}</h2> -->
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div *ngFor="let pokemon of pokemonList$ | async; let i=index" class="col">
+      <div class="card mb-3" style="max-width: 500px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img [src]="over[i] ? pokemon.sprites.other.dream_world.front_default : pokemon.sprites.other['official-artwork'].front_default"
+           (mouseover)="over[i] = true"
+           (mouseout)="over[i] = false"
+            onerror="this.src='./assets/images/pokeball.png';"
+            class="img-fluid rounded-start"
+            [alt]=" pokemon.name + 'img' ">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ pokemon.name | titlecase}}</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+                content. This content is a little bit longer.</p>
+              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container d-flex justify-content-around bg-light">
+  <button type="button" class="btn btn-outline-info btn-lg" (click)="onBackClick()">BACK</button>
+  <form [formGroup]="form" class="row g-3">
+    <div class="col-auto">
+      <label for="Quantity/page" class="form-label">Quantity</label>
+      <input type="number" id="quantity" class="form-control" formControlName="quantity" min="5" max="30" oninput="this.value =
+      this.value <= 3 ? 3 : this.value; this.value = this.value >= 30 ? 30 : this.value">
+    </div>
+    <div class="col-auto">
+      <label for="range" class="form-label">Range</label>
+      <ng-select formControlName="range" [items]="rangeNumber" class="form-control" [clearable]="false" id="range"></ng-select>
+    </div>
+  </form>
+  <button type="button" class="btn btn-outline-info btn-lg" (click)="onNextClick()">NEXT</button>
+</div>
