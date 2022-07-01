@@ -8,7 +8,7 @@ import {
   Subscription,
   delay,
 } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-pokemon-display',
@@ -18,7 +18,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class PokemonDisplayComponent implements OnInit {
   pokemonList$!: Observable<any>;
   maxPokemon = 1154;
-  limit = 12;
+  limit: number = 12;
   offset = 0;
   rangeNumber: number[] = [];
   formSubscription!: Subscription;
@@ -28,6 +28,13 @@ export class PokemonDisplayComponent implements OnInit {
     range: [this.offset + 1, Validators.required],
     quantity: [this.limit, Validators.required],
   });
+
+  // form = new FormGroup(
+  //   {
+  //     range: new FormControl<number>(this.offset + 1, Validators.required),
+  //     quantity: new FormControl<number>(this.limit, Validators.required),
+  //   }
+  // );
 
   constructor(
     private pokemonService: PokemonService,
