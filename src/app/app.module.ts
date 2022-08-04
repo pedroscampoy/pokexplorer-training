@@ -9,7 +9,9 @@ import { PokemonSearchComponent } from './components/pokemon-search/pokemon-sear
 import { PokemonFilterComponent } from './components/pokemon-filter/pokemon-filter.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +19,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     PokemonDisplayComponent,
     PokemonSearchComponent,
     PokemonFilterComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgSelectModule,
+    FormsModule,
     ReactiveFormsModule,
 
   ],

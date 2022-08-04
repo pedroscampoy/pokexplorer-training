@@ -1,0 +1,17 @@
+<div class="d-flex align-items-center justify-content-center py-5">
+  <div class="border border-primary p-4 w-50">
+    <form class="form-group" (ngSubmit)="login()">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="user" class="form-control" name="username" [(ngModel)]="username" />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="password" />
+      </div>
+      <button type="submit" class="btn btn-primary"  *ngIf="(isLoggedIn$ | async) === false">Login</button>
+      <button type="submit" class="btn btn-primary" *ngIf="isLoggedIn$ | async" (click)="logout()">Logout</button>
+    </form>
+    <div class="my-4" *ngIf="isLoggedIn$ | async">User is logged in!</div>
+  </div>
+</div>
