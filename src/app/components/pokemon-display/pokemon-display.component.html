@@ -14,9 +14,12 @@
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title">#{{ pokemon.id }} {{ pokemon.name | titlecase}}</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                content. This content is a little bit longer.</p>
-              <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+              <div class="pokemon-type-wrapper">
+                <div class="pokemon-type" [ngStyle]="{'background-color': getTypeColor(type.type.name, 0.2)}"
+                *ngFor="let type of pokemon.types">
+                  <p>{{type.type.name.slice(0,2) | titlecase}}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

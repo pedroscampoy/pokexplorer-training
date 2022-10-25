@@ -9,6 +9,7 @@ import {
   delay,
 } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { POKEMON_COLOUR_TYPES } from 'src/app/core/constants/colors-types';
 
 @Component({
   selector: 'app-pokemon-display',
@@ -80,9 +81,16 @@ export class PokemonDisplayComponent implements OnInit {
     this.form.patchValue({ range: this.offset + 1 });
     // this.fetchPokemonList(this.limit, this.offset);
   }
+
   rangeFromNumber(from: number, to: number, step: number): number[] {
     return [...Array(Math.floor((to - from) / step) + 1)].map(
       (_, i) => from + i * step
     );
+  }
+
+  getTypeColor(type: string, alpha: number): string {
+    const hexColorType =  POKEMON_COLOUR_TYPES[type] || "#808080"
+    const [r, g, b] = hexColorType.match(/\w\w/g)?.map(x => parseInt(x, 16)) || ['0', '0', '0'];
+    return `rgba(${r},${g},${b},${alpha})`
   }
 }
