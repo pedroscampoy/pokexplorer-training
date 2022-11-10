@@ -17,7 +17,7 @@
               <div class="pokemon-type-wrapper">
                 <div class="pokemon-type" [ngStyle]="{'background-color': getTypeColor(type.type.name, 0.2)}"
                 *ngFor="let type of pokemon.types">
-                  <p>{{type.type.name.slice(0,2) | titlecase}}</p>
+                  <span>{{type.type.name.slice(0,2) | titlecase}}</span>
                 </div>
               </div>
             </div>
