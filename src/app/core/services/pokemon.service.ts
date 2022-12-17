@@ -20,7 +20,6 @@ export class PokemonService {
   }
 
   getPokemonByUrl(url: string) {
-
     return this.http.get(url,
      {responseType: 'json'})
   }

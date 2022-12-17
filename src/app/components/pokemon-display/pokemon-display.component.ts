@@ -1,3 +1,4 @@
+import { pokemonFeatureKey } from './../../core/store/reducers/pokemon.reducer';
 import { PokemonService } from './../../core/services/pokemon.service';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -7,9 +8,13 @@ import {
   forkJoin,
   Subscription,
   delay,
+  map,
 } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { POKEMON_COLOUR_TYPES } from 'src/app/core/constants/colors-types';
+import { Store } from '@ngrx/store';
+import { loadPokemonsSuccess } from 'src/app/core/store/actions/pokemon.actions';
+import { pokemonSelector } from 'src/app/core/store/selectors/pokemon.selectors';
 
 @Component({
   selector: 'app-pokemon-display',
@@ -17,7 +22,8 @@ import { POKEMON_COLOUR_TYPES } from 'src/app/core/constants/colors-types';
   styleUrls: ['./pokemon-display.component.scss'],
 })
 export class PokemonDisplayComponent implements OnInit {
-  pokemonList$!: Observable<any>;
+  //pokemonList$!: Observable<any>;
+  pokemonList$ =  this.store.select(pokemonSelector);
   maxPokemon = 1154;
   limit = 12;
   offset = 0;
@@ -32,7 +38,8 @@ export class PokemonDisplayComponent implements OnInit {
 
   constructor(
     private pokemonService: PokemonService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +58,8 @@ export class PokemonDisplayComponent implements OnInit {
   }
 
   fetchPokemonList(limit: number, offset: number) {
-    this.pokemonList$ = this.pokemonService.getPokemons(limit, offset).pipe(
+    //this.pokemonList$ = this.pokemonService.getPokemons(limit, offset).pipe(
+    this.pokemonService.getPokemons(limit, offset).pipe(
       tap((res) => {
         console.log({ res });
       }),
@@ -62,8 +70,9 @@ export class PokemonDisplayComponent implements OnInit {
       ),
       tap((res) => {
         console.log({ res });
+        this.store.dispatch(loadPokemonsSuccess({data: res}));
       })
-    );
+    ).subscribe();
   }
 
   onNextClick() {

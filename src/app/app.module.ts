@@ -12,6 +12,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
+import { AppStoreModule } from 'src/app/core/store/app-store.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { LoginComponent } from './components/login/login.component';
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    AppStoreModule
 
   ],
   providers: [],
