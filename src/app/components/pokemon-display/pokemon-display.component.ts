@@ -7,9 +7,11 @@ import {
   forkJoin,
   Subscription,
   delay,
+  map,
 } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { POKEMON_COLOUR_TYPES } from 'src/app/core/constants/colors-types';
+import { Pokemon } from 'src/app/core/models/pokemon.domain';
 
 @Component({
   selector: 'app-pokemon-display',
@@ -60,9 +62,8 @@ export class PokemonDisplayComponent implements OnInit {
           pokEl.map((pok: any) => this.pokemonService.getPokemonByUrl(pok.url))
         )
       ),
-      tap((res) => {
-        console.log({ res });
-      })
+      map((pEl: any) => pEl.map((pok: any) => new Pokemon(pok))),
+      tap((res) => console.log({ res }))
     );
   }
 
@@ -70,7 +71,7 @@ export class PokemonDisplayComponent implements OnInit {
     this.offset + this.limit === this.maxPokemon
       ? (this.offset = 0)
       : (this.offset += this.limit);
-      this.form.patchValue({ range: this.offset + 1 });
+    this.form.patchValue({ range: this.offset + 1 });
     // this.fetchPokemonList(this.limit, this.offset);
   }
 
@@ -89,8 +90,10 @@ export class PokemonDisplayComponent implements OnInit {
   }
 
   getTypeColor(type: string, alpha: number): string {
-    const hexColorType =  POKEMON_COLOUR_TYPES[type] || "#808080"
-    const [r, g, b] = hexColorType.match(/\w\w/g)?.map(x => parseInt(x, 16)) || ['0', '0', '0'];
-    return `rgba(${r},${g},${b},${alpha})`
+    const hexColorType = POKEMON_COLOUR_TYPES[type] || '#808080';
+    const [r, g, b] = hexColorType
+      .match(/\w\w/g)
+      ?.map((x) => parseInt(x, 16)) || ['0', '0', '0'];
+    return `rgba(${r},${g},${b},${alpha})`;
   }
 }
