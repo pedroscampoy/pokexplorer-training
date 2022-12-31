@@ -7,6 +7,7 @@ import { map } from 'rxjs';
 })
 export class PokemonService {
   pokeapiUrl = "https://pokeapi.co/api/v2/"
+  pokemonMockUrl = "http://localhost:8064/pokemon"
 
   constructor(private http: HttpClient) { }
 
@@ -22,5 +23,9 @@ export class PokemonService {
   getPokemonByUrl(url: string) {
     return this.http.get(url,
      {responseType: 'json'})
+  }
+
+  getAllPokemons() {
+    return this.http.get(this.pokemonMockUrl, {responseType: 'json'})
   }
 }

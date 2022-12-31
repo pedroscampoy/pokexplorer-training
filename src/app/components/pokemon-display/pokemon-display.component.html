@@ -1,6 +1,6 @@
 <div class="container p-4">
   <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div *ngFor="let pokemon of pokemonList$ | async; let i=index" class="col">
+    <div *ngFor="let pokemon of pokemonDisplayList$ | async; let i=index" class="col">
       <div class="card mb-3" style="max-width: 500px;">
         <div class="row g-0">
           <div class="col-md-4">
@@ -37,7 +37,7 @@
     </div>
     <div class="col-auto">
       <label for="range" class="form-label">Starting #</label>
-      <ng-select formControlName="range" [items]="rangeNumber" class="form-control" [clearable]="false" id="range"></ng-select>
+      <ng-select formControlName="range" [items]="rangeNumber$ | async" class="form-control" [clearable]="false" id="range"></ng-select>
     </div>
   </form>
   <button type="button" class="btn btn-outline-info btn-lg" (click)="onNextClick()">NEXT</button>
