@@ -1,22 +1,21 @@
-<div class="container p-4">
+<div class="container p-4 fill-space">
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div *ngFor="let pokemon of pokemonDisplayList$ | async; let i=index" class="col">
       <div class="card mb-3" style="max-width: 500px;">
         <div class="row g-0">
           <div class="col-md-4">
-            <img [src]="over[i] ? pokemon.sprites.other.dream_world.front_default : pokemon.sprites.other['official-artwork'].front_default"
-           (mouseover)="over[i] = true"
-           (mouseout)="over[i] = false"
-            onerror="this.src='./assets/images/pokeball.png';"
-            class="img-fluid rounded-start"
-            [alt]=" pokemon.name + 'img' ">
+            <img
+              [src]="over[i] ? pokemon.sprites.other.dream_world.front_default : pokemon.sprites.other['official-artwork'].front_default"
+              (mouseover)="over[i] = true" (mouseout)="over[i] = false"
+              onerror="this.src='./assets/images/pokeball.png';" class="img-fluid rounded-start"
+              [alt]=" pokemon.name + 'img' ">
           </div>
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title">#{{ pokemon.id }} {{ pokemon.name | titlecase}}</h5>
               <div class="pokemon-type-wrapper">
                 <div class="pokemon-type" [ngStyle]="{'background-color': getTypeColor(type.type.name, 0.2)}"
-                *ngFor="let type of pokemon.types">
+                  *ngFor="let type of pokemon.types">
                   <span>{{type.type.name.slice(0,2) | titlecase}}</span>
                 </div>
               </div>
@@ -26,19 +25,20 @@
       </div>
     </div>
   </div>
-</div>
-<div class="container d-flex justify-content-around bg-light">
-  <button type="button" class="btn btn-outline-info btn-lg" (click)="onBackClick()">BACK</button>
-  <form [formGroup]="form" class="row g-3">
-    <div class="col-auto">
-      <label for="Quantity/page" class="form-label">Quantity</label>
-      <input type="number" id="quantity" class="form-control" formControlName="quantity" min="5" max="30" oninput="this.value =
+  <div class="d-flex justify-content-around bg-light">
+    <button type="button" class="btn btn-outline-info btn-lg" (click)="onBackClick()">BACK</button>
+    <form [formGroup]="form" class="row g-3">
+      <div class="col-auto">
+        <label for="Quantity/page" class="form-label">Quantity</label>
+        <input type="number" id="quantity" class="form-control" formControlName="quantity" min="5" max="30" oninput="this.value =
       this.value <= 3 ? 3 : this.value; this.value = this.value >= 30 ? 30 : this.value">
-    </div>
-    <div class="col-auto">
-      <label for="range" class="form-label">Starting #</label>
-      <ng-select formControlName="range" [items]="rangeNumber$ | async" class="form-control" [clearable]="false" id="range"></ng-select>
-    </div>
-  </form>
-  <button type="button" class="btn btn-outline-info btn-lg" (click)="onNextClick()">NEXT</button>
+      </div>
+      <div class="col-auto">
+        <label for="range" class="form-label">Starting #</label>
+        <ng-select formControlName="range" [items]="rangeNumber$ | async" class="form-control" [clearable]="false"
+          id="range"></ng-select>
+      </div>
+    </form>
+    <button type="button" class="btn btn-outline-info btn-lg" (click)="onNextClick()">NEXT</button>
+  </div>
 </div>

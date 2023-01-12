@@ -1,5 +1,5 @@
 import { PokemonService } from './../../core/services/pokemon.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   Observable,
   tap,
@@ -20,6 +20,7 @@ import { Pokemon } from 'src/app/core/models/pokemon.domain';
   selector: 'app-pokemon-display',
   templateUrl: './pokemon-display.component.html',
   styleUrls: ['./pokemon-display.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PokemonDisplayComponent implements OnInit {
   pokemonList$ : Observable<Pokemon[]> =  this.store.select(pokemonSelector);
