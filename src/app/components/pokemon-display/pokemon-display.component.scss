@@ -21,6 +21,18 @@
     align-items: center;
   }
 }
+
+.container {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.fill-space {
+  display: flex;
+  flex-grow: 1;
+}
 // .pokemon-type {
 //   display: flex;
 //   height: 0;
