@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { AppStoreModule } from 'src/app/core/store/app-store.module';
+import { PokemonDetailsComponent } from './components/pokemon-details/pokemon-details.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AppStoreModule } from 'src/app/core/store/app-store.module';
     HomeComponent,
     HeaderComponent,
     LoginComponent,
+    PokemonDetailsComponent,
   ],
   imports: [
     BrowserModule,
