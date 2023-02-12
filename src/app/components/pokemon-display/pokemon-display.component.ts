@@ -27,14 +27,14 @@ export class PokemonDisplayComponent implements OnInit {
   maxPokemon = 1154;
   limit = 12;
   offset = 0;
-  rangeNumber$ = new BehaviorSubject<number[]>([]);
+  offsetNumber$ = new BehaviorSubject<number[]>([]);
   formSubscription!: Subscription;
   over: boolean[] = [];
   pokemonDisplayList$!: Observable<Pokemon[]>;
 
   form: FormGroup = this.fb.group({
-    range: [this.offset + 1, Validators.required],
-    quantity: [this.limit, Validators.required],
+    offset: [this.offset + 1, Validators.required],
+    limit: [this.limit, Validators.required],
   });
 
   constructor(
@@ -51,13 +51,15 @@ export class PokemonDisplayComponent implements OnInit {
 
     this.pokemonDisplayList$ = combineLatest({
         pokemons: this.pokemonList$,
-        range: this.form.get('range')!.valueChanges.pipe(startWith(this.offset + 1)),
-        quantity: this.form.get('quantity')!.valueChanges.pipe(startWith(this.limit)),
+        offset: this.form.get('offset')!.valueChanges.pipe(startWith(this.offset + 1)),
+        limit: this.form.get('limit')!.valueChanges.pipe(startWith(this.limit)),
       }).pipe(
-        tap((res) => this.rangeNumber$.next(this.rangeFromNumber(1, this.maxPokemon, res.quantity))),
-        map((res) => res.pokemons.slice(res.range -1, res.range -1 + res.quantity))
+        tap((res) => {
+          this.offsetNumber$.next(this.offsetFromNumber(1, this.maxPokemon, res.limit));
+          this.offset = res.offset - 1;
+          }),
+        map((res) => res.pokemons.slice(res.offset -1, res.offset -1 + res.limit))
         );
-
     this.fetchPokemonList();
   }
 
@@ -74,17 +76,17 @@ export class PokemonDisplayComponent implements OnInit {
     this.offset + this.limit === this.maxPokemon
       ? (this.offset = 0)
       : (this.offset += this.limit);
-    this.form.patchValue({ range: this.offset + 1 });
+    this.form.patchValue({ offset: this.offset + 1 });
   }
 
   onBackClick() {
     this.offset - this.limit < 0
       ? (this.offset = this.maxPokemon - this.limit)
       : (this.offset -= this.limit);
-    this.form.patchValue({ range: this.offset + 1 });
+    this.form.patchValue({ offset: this.offset + 1 });
   }
 
-  rangeFromNumber(from: number, to: number, step: number): number[] {
+  offsetFromNumber(from: number, to: number, step: number): number[] {
     return [...Array(Math.floor((to - from) / step) + 1)].map(
       (_, i) => from + i * step
     );
