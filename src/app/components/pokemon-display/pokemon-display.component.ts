@@ -26,7 +26,7 @@ export class PokemonDisplayComponent implements OnInit {
   pokemonList$ : Observable<Pokemon[]> =  this.store.select(pokemonSelector);
   maxPokemon = 1154;
   limit = 12;
-  offset = 0;
+  offset = 1;
   offsetNumber$ = new BehaviorSubject<number[]>([]);
   formSubscription!: Subscription;
   over: boolean[] = [];
@@ -51,12 +51,13 @@ export class PokemonDisplayComponent implements OnInit {
 
     this.pokemonDisplayList$ = combineLatest({
         pokemons: this.pokemonList$,
-        offset: this.form.get('offset')!.valueChanges.pipe(startWith(this.offset + 1)),
+        offset: this.form.get('offset')!.valueChanges.pipe(startWith(this.offset)),
         limit: this.form.get('limit')!.valueChanges.pipe(startWith(this.limit)),
       }).pipe(
         tap((res) => {
           this.offsetNumber$.next(this.offsetFromNumber(1, this.maxPokemon, res.limit));
           this.offset = res.offset - 1;
+          this.limit = res.limit;
           }),
         map((res) => res.pokemons.slice(res.offset -1, res.offset -1 + res.limit))
         );
@@ -76,14 +77,14 @@ export class PokemonDisplayComponent implements OnInit {
     this.offset + this.limit === this.maxPokemon
       ? (this.offset = 0)
       : (this.offset += this.limit);
-    this.form.patchValue({ offset: this.offset + 1 });
+    this.form.patchValue({ offset: this.offset + 1});
   }
 
   onBackClick() {
     this.offset - this.limit < 0
       ? (this.offset = this.maxPokemon - this.limit)
       : (this.offset -= this.limit);
-    this.form.patchValue({ offset: this.offset + 1 });
+    this.form.patchValue({ offset: this.offset + 1});
   }
 
   offsetFromNumber(from: number, to: number, step: number): number[] {
