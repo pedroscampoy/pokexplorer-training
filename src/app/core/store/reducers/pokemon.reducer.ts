@@ -6,16 +6,26 @@ export const pokemonFeatureKey = 'pokemon';
 
 export interface State {
   pokemons: Array<any>,
-  loading: boolean
+  loading: boolean,
+  loaded: boolean,
+  error: any,
+  selectedPokemon: any,
 
 }
 
 export const initialState: State = {
   pokemons: [],
-  loading: true
+  loading: true,
+  loaded: false,
+  error: null,
+  selectedPokemon: null,
 };
 
 export const reducer = createReducer(
   initialState,
-  on(fromPokemonActions.loadPokemonsSuccess, (state, { data }) => ({ ...state, pokemons: data }))
+  on(fromPokemonActions.loadPokemons, (state) => ({ ...state, loading: true })),
+  on(fromPokemonActions.loadPokemonsSuccess, (state, { data }) => ({ ...state, pokemons: data, loading: false, loaded: true })),
+  on(fromPokemonActions.loadPokemonsFailure, (state, { error }) => ({ ...state, error, loading: false, loaded: true })),
+  on(fromPokemonActions.selectPokemon, (state, { id }) => ({ ...state, selectedPokemon: state.pokemons.find((pokemon) => pokemon.id === id) })),
+  on(fromPokemonActions.selectPokemonDetail, (state, { id }) => ({ ...state, selectedPokemon: state.pokemons.find((pokemon) => pokemon.id === id) })),
 );

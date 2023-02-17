@@ -1,4 +1,4 @@
-<div class="container p-4 fill-space">
+<div class="container p-4 fill-space" *ngIf="selectPokemon$ | async as pokemon">
   <div id="pokedex">
     <div id="left">
       <div id="logo"></div>
@@ -24,7 +24,10 @@
           <div id="buttontopPicture2"></div>
         </div>
         <div id="picture">
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/200653/psykokwak.gif" alt="psykokwak" height="170" />
+          <img
+          class="bounce"
+          [src]="pokemon.sprites.other['official-artwork'].front_default ||
+          'https://s3-us-west-2.amazonaws.com/s.cdpn.io/200653/psykokwak.gif'" alt="psykokwak" height="170" />
         </div>
         <div id="buttonbottomPicture"></div>
         <div id="speakers">
@@ -38,13 +41,13 @@
       <div id="barbutton1"></div>
       <div id="barbutton2"></div>
       <div id="cross">
-        <div id="leftcross">
+        <div id="leftcross" (click)="onLeftClick()">
           <div id="leftT"></div>
         </div>
         <div id="topcross">
           <div id="upT"></div>
         </div>
-        <div id="rightcross">
+        <div id="rightcross" (click)="onRightClick()">
           <div id="rightT"></div>
         </div>
         <div id="midcross">
@@ -57,10 +60,10 @@
     </div>
     <div id="right">
       <div id="stats">
-        <strong>Name:</strong> Psyduck<br/>
-        <strong>Type:</strong> Water<br/>
-        <strong>Height:</strong> 2'072''<br/>
-        <strong>Weight:</strong> 43.2 lbs.<br/><br/>
+        <strong>Name:</strong> {{ pokemon.name || 'Psyduck' }}<br/>
+        <strong>Type:</strong> {{ pokemon.types || 'Water' }} <br/>
+        <strong>Height:</strong> {{ pokemon.height + " '" || '2.072' }}<br/>
+        <strong>Weight:</strong> {{ pokemon.weight + " lbs" || '43.2 lbs' }} <br/><br/>
         <!-- <strong>The duck Pokemon</strong><br/>
         Uses mysterious powers to perform various attacks. -->
       </div>

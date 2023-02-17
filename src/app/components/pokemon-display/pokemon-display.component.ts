@@ -12,7 +12,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { POKEMON_COLOUR_TYPES } from 'src/app/core/constants/colors-types';
 import { Store } from '@ngrx/store';
-import { loadPokemonsSuccess } from 'src/app/core/store/actions/pokemon.actions';
+import { loadPokemons, loadPokemonsSuccess, selectPokemon } from 'src/app/core/store/actions/pokemon.actions';
 import { pokemonSelector } from 'src/app/core/store/selectors/pokemon.selectors';
 import { Pokemon } from 'src/app/core/models/pokemon.domain';
 
@@ -61,17 +61,18 @@ export class PokemonDisplayComponent implements OnInit {
           }),
         map((res) => res.pokemons.slice(res.offset -1, res.offset -1 + res.limit))
         );
-    this.fetchPokemonList();
+    //this.fetchPokemonList();
+    this.store.dispatch(loadPokemons())
   }
 
-  fetchPokemonList() {
-    this.pokemonService.getAllPokemons().pipe(
-      map((pEl: any) => pEl.map((pok: any) => new Pokemon(pok))),
-      tap((res) => {
-        this.store.dispatch(loadPokemonsSuccess({data: res}));
-      })
-    ).subscribe()
-  }
+  // fetchPokemonList() {
+  //   this.pokemonService.getAllPokemons().pipe(
+  //     map((pEl: any) => pEl.map((pok: any) => new Pokemon(pok))),
+  //     tap((res) => {
+  //       this.store.dispatch(loadPokemonsSuccess({data: res}));
+  //     })
+  //   ).subscribe()
+  // }
 
   onNextClick() {
     this.offset + this.limit === this.maxPokemon
@@ -85,6 +86,10 @@ export class PokemonDisplayComponent implements OnInit {
       ? (this.offset = this.maxPokemon - this.limit)
       : (this.offset -= this.limit);
     this.form.patchValue({ offset: this.offset + 1});
+  }
+
+  onSelectPokemon(id: number) {
+    this.store.dispatch(selectPokemon({id}));
   }
 
   offsetFromNumber(from: number, to: number, step: number): number[] {

@@ -13,3 +13,13 @@ export const loadPokemonsFailure = createAction(
   '[Pokemon] Load Pokemons Failure',
   props<{ error: any }>()
 );
+
+export const selectPokemon = createAction(
+  '[Pokemon Display] Select Pokemons',
+  props<{ id: number }>()
+);
+
+export const selectPokemonDetail = createAction(
+  '[Pokemon Detail] Select Pokemons',
+  props<{ id: number }>()
+);
