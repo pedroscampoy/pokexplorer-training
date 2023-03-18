@@ -1,7 +1,7 @@
 import { Pokemon } from 'src/app/core/models/pokemon.domain';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, shareReplay } from 'rxjs';
+import { map, Observable, ReplaySubject, share, shareReplay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,6 @@ export class PokemonService {
     return this.http.get(this.pokemonMockUrl, {responseType: 'json'});
   }
 
- allPokemons$ = this.http.get(this.pokemonMockUrl, {responseType: 'json'}).pipe(shareReplay(1));
+ allPokemons$ = this.http.get(this.pokemonMockUrl, {responseType: 'json'}).pipe(share({connector: () => new ReplaySubject(1)}));
 
 }
