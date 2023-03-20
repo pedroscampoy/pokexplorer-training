@@ -10,7 +10,8 @@ export interface State {
   loaded: boolean,
   error: any,
   selectedPokemon: any,
-
+  offset: number,
+  limit: number,
 }
 
 export const initialState: State = {
@@ -19,6 +20,8 @@ export const initialState: State = {
   loaded: false,
   error: null,
   selectedPokemon: null,
+  offset: 0,
+  limit: 0,
 };
 
 export const reducer = createReducer(

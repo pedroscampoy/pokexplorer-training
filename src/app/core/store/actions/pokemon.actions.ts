@@ -1,7 +1,9 @@
 import { createAction, props } from '@ngrx/store';
+import { Pokemon } from 'src/app/core/models/pokemon.domain';
 
 export const loadPokemons = createAction(
-  '[Pokemon] Load Pokemons'
+  '[Pokemon] Load Pokemons',
+  props<{ offset: number, limit: number }>()
 );
 
 export const loadPokemonsSuccess = createAction(
@@ -22,4 +24,14 @@ export const selectPokemon = createAction(
 export const selectPokemonDetail = createAction(
   '[Pokemon Detail] Select Pokemons',
   props<{ id: number }>()
+);
+
+export const setPokemonOffset = createAction(
+  '[Pokemon] Set Pokemon Offset',
+  props<{ offset: number }>()
+);
+
+export const setPokemonLimit = createAction(
+  '[Pokemon] Set Pokemon Limit',
+  props<{ limit: number }>()
 );

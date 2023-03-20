@@ -8,6 +8,7 @@ import {
   combineLatest,
   startWith,
   BehaviorSubject,
+  withLatestFrom,
 } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { POKEMON_COLOUR_TYPES } from 'src/app/core/constants/colors-types';
@@ -20,13 +21,13 @@ import { Pokemon } from 'src/app/core/models/pokemon.domain';
   selector: 'app-pokemon-display',
   templateUrl: './pokemon-display.component.html',
   styleUrls: ['./pokemon-display.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PokemonDisplayComponent implements OnInit {
   pokemonList$ : Observable<Pokemon[]> =  this.store.select(pokemonSelector);
   maxPokemon = 1154;
   limit = 12;
-  offset = 1;
+  offset = 0;
   offsetNumber$ = new BehaviorSubject<number[]>([]);
   formSubscription!: Subscription;
   over: boolean[] = [];
@@ -42,7 +43,7 @@ export class PokemonDisplayComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store
   ) {
-
+    this.store.dispatch(loadPokemons({offset: this.offset, limit: this.limit}))
   }
 
   ngOnInit(): void {
@@ -50,19 +51,24 @@ export class PokemonDisplayComponent implements OnInit {
     this.over.fill(false);
 
     this.pokemonDisplayList$ = combineLatest({
-        pokemons: this.pokemonList$,
+        //pokemons: this.pokemonList$,
         offset: this.form.get('offset')!.valueChanges.pipe(startWith(this.offset)),
         limit: this.form.get('limit')!.valueChanges.pipe(startWith(this.limit)),
       }).pipe(
+        withLatestFrom(this.pokemonList$),
+        map(([form, pokemons]) => ({...form, pokemons })),
         tap((res) => {
+          console.log('tap', res);
           this.offsetNumber$.next(this.offsetFromNumber(1, this.maxPokemon, res.limit));
           this.offset = res.offset - 1;
           this.limit = res.limit;
           }),
-        map((res) => res.pokemons.slice(res.offset -1, res.offset -1 + res.limit))
+        map((res) => {
+          this.store.dispatch(loadPokemons({offset: this.offset, limit: this.limit}))
+          return res.pokemons}),
+        //.slice(res.offset -1, res.offset -1 + res.limit))
         );
     //this.fetchPokemonList();
-    this.store.dispatch(loadPokemons())
   }
 
   // fetchPokemonList() {
@@ -79,6 +85,7 @@ export class PokemonDisplayComponent implements OnInit {
       ? (this.offset = 0)
       : (this.offset += this.limit);
     this.form.patchValue({ offset: this.offset + 1});
+    this.store.dispatch(loadPokemons({offset: this.offset, limit: this.limit}))
   }
 
   onBackClick() {
@@ -86,6 +93,7 @@ export class PokemonDisplayComponent implements OnInit {
       ? (this.offset = this.maxPokemon - this.limit)
       : (this.offset -= this.limit);
     this.form.patchValue({ offset: this.offset + 1});
+    this.store.dispatch(loadPokemons({offset: this.offset, limit: this.limit}))
   }
 
   onSelectPokemon(id: number) {
