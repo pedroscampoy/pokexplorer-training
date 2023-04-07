@@ -11,12 +11,12 @@ import * as fromPokemonReducer from 'src/app/core/store/reducers/pokemon.reducer
 
 
 export interface AppState {
-  user: fromUserReducer.State,
-  pokemon: fromPokemonReducer.State
+  //user: fromUserReducer.State,
+  pokemon: fromPokemonReducer.State,
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-  user: fromUserReducer.reducer,
+  //user: fromUserReducer.reducer,
   pokemon: fromPokemonReducer.reducer
 };
 

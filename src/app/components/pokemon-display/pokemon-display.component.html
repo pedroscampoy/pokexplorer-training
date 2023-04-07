@@ -52,6 +52,9 @@
   </div>
   <div class="d-flex justify-content-around bg-light">
     <button
+      [disabled]="isBackButtonEnabled$ | async"
+      #backButton
+      id="back-button"
       type="button"
       class="btn btn-outline-info btn-lg"
       (click)="onBackClick()"
@@ -84,6 +87,8 @@
       </div>
     </form>
     <button
+      #nextButton
+      id="next-button"
       type="button"
       class="btn btn-outline-info btn-lg"
       (click)="onNextClick()"
