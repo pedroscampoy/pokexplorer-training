@@ -1,27 +1,43 @@
 # PokexplorerTraining
+This project includes the classic pokedex app (because everybody loves pokémons) and implements step by step ngrx in the code, from basic implementation to advance use of the library.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run mock` to build the project with mock back-end implemented with json-server.
 
-## Running unit tests
+## Branches content
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  - 01-initial-setup
+    - [x] Use of ngrx schematics
+    - [x] Create store module
+    - [x] Initial store elements - Reducer & initial state
+   
+  - 02-actions-effects
+    - [x] Create initial actions and effects
+    - [x] Create selectors 
+   
+  - 03-select-effects-pro
+    - [x] Create actions end efects for error handling
+    - [x] Combine data in seletors
+   
+  - 04-effects-pagination
+    - [x] Effect advance uses:
+      - [x] Preload pagination in store in the backgroung
+      - [ ] Effect triggered by change in selector
+      - [ ] Several actions in the same effect
+      - [ ] Asynchronous actions to trigger one effect
 
-## Running end-to-end tests
+  - 05-ngrx-preformance //TODO
+    - [ ] Use StoreModule.forFeature to load store in corresponding module
+    - [ ] Use EffectsModule.forFeature to load store in corresponding module
+    - [ ] Configure Store Devtools
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  - 06-ngrx-testing //TODO
+    - [ ] Use provideMockStore in component Unit Test
+    - [ ] Use mockStore.overrideSelector to asess different scenarios
+    - [ ] Cover actions and selectors
+    - [ ] Dispatch actions in effect unit test and evaluate results
+      - Action as BehaviorSubject
+      - jasmine-marbles
